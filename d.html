@@ -1,0 +1,12 @@
+<style>html,body{display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0;padding:0;height:100vh};*{text-align:center}:root {color-scheme:light dark}</style>
+<button onclick=UIswitch()>1) / •</button>
+<ul id=main>
+<li><input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button></li>
+<li><input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button></li>
+</ul>
+<button onclick=add()>add item</button>
+<script>
+add=()=>{const li=document.createElement("li");li.innerHTML=`<input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button>`;main.appendChild(li);}
+del=(e)=>{e.parentElement.remove()}
+UIswitch=()=>{const nT=main.tagName.toLowerCase()==="ul"?"ol":"ul";const nL=document.createElement(nT);nL.id=main.id;nL.className=main.className;nL.innerHTML=main.innerHTML;main.replaceWith(nL);}
+</script>

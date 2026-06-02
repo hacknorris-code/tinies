@@ -1,0 +1,12 @@
+<style>html,body{display:flex;align-items:center;justify-content:center;margin:0;padding:0;height:100vh;};*{text-align:center;}:root{color-scheme:light dark;}</style>
+<table id=nav><tr><td onclick=del(0)>-</td><td onclick=del(1)>-</td><td></td></tr><tr><td onclick=del(-1)>-</td><td><table id=main><tr><td>•</td><td>•</td></tr><tr><td>•</td><td>•</td></tr></table></td><td onclick=add(-1)>+</td></tr><tr><td></td><td onclick=add(1)>+</td><td onclick=add(0)>+</td></tr></table>
+<script>
+del=(x)=>{switch(x){case 0:delCol();delRow();break;case 1:delCol();break;case -1:delRow();break;};init();}
+add=(y)=>{switch(y){case 0:addCol();addRow();break;case 1:addRow();break;case -1:addCol();break;};init();}
+delCol=()=>{for(let r of main.rows)r.cells.length&&r.deleteCell(-1)}
+delRow=()=>main.rows.length&&main.deleteRow(-1)
+addCol=()=>{for(let r of main.rows)r.insertCell(-1).innerHTML="•"}
+addRow=()=>{let l=main.rows[0]?.cells.length||0,r=main.insertRow(-1);for(let i=0;i<l;i++)r.insertCell(i).innerHTML="•"}
+init=()=>{array=document.querySelectorAll("#main td");array.forEach((element,index)=>{element.setAttribute("contenteditable",true);});}
+init();
+</script>

@@ -1,0 +1,10 @@
+<style>html,body{display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0;padding:0;height:100vh};*{text-align:center}:root {color-scheme:light dark}</style>
+<canvas style="width:600px;height:300px" id=out></canvas>f(x):<input oninput=upd(this.value) onchange=upd(this.value)>
+<script>
+ctx=out.getContext`2d`;
+const el=document.createElement('div');el.style.color='AccentColor';out.append(el);const color=getComputedStyle(el).color;el.remove();
+norm=(ex)=>{return ex.replace(/(?<![a-zA-Z])(sin|cos|tan|abs|acos|acosh|asin|asinh|atan|atanh|cbrt|ceil|cosh|exp|floor|hypot|log|pow|random|round|sinh|sqrt|tanh)\(|(?<![a-zA-Z])(PI|E|SQRT2|LN10|LN2|LOG10E|LOG2E|SQRT1_2)(?![a-zA-Z])/g,(m,f,c)=>{return f?`Math.${f}(`:`Math.${c}`;});}
+mkF=(ex)=>{try{return new Function("x",`return ${ex}`);}catch{return ()=>0;}}
+dP=(ctx,x,y)=>{ctx.fillStyle=color;ctx.fillRect(x,y,1,1);}
+upd=(ex)=>{ctx.clearRect(0, 0, out.width, out.height);const f=mkF(norm(ex)),xMin=-10,xMax=10,yMin=-1,yMax=10,vH=out.height,vW=out.width;for(let px=0;px<vW;px++){const x=xMin+(px/(vW-1))*(xMax-xMin);let y;try{y=f(x);}catch{continue;}if(!isFinite(y))continue;const py=yMin+(y-yMin)*(vH)/(yMax-yMin);dP(ctx,px,Math.round(vH-py));}}
+</script>

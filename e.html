@@ -1,0 +1,14 @@
+<style>html,body{display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0;padding:0;height:100vh};*{text-align:center}:root {color-scheme:light dark}</style>
+<input type=range min=0 max=360 id=i><button onclick=c()>clear</button><canvas id=m width=500 height=300></canvas><button onclick=s()>save</button>
+<script>
+x=m.getContext`2d`,d=h=0
+i.oninput=e=>h=i.value
+f=(h,s=1,l=.5,a=s*Math.min(l,1-l),k=n=>(n+h/30)%12)=>[0,8,4].map(n=>Math.round(255*(l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1))))))
+g=(h,t=.18,b,z,q=9)=>{for(l=0;l<1;l+=.001)(z=Math.abs((b=f(h,1,l)).map(v=>(v/=255,v<.03928?v/12.92:((v+.055)/1.055)**2.4)).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0)-t))<q&&(r=b,q=z);return`rgb(${r})`}
+s=_=>open(m.toDataURL())
+c=_=>(x.fillStyle="#fff",x.fillRect(0,0,m.width,m.height))
+m.onmousedown=_=>d=1
+m.onmouseup=_=>(d=0,x.beginPath())
+m.onmousemove=e=>d&&(x.lineWidth=5,x.lineCap="round",x.strokeStyle=h?g(h):"#000",x.lineTo(e.offsetX,e.offsetY),x.stroke(),x.beginPath(),x.moveTo(e.offsetX,e.offsetY))
+c()
+</script>

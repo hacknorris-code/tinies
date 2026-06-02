@@ -1,0 +1,25 @@
+<style>html,body{height:100vh}body{display:flex}body>*{flex:1;min-width:0;}*{font:13px monospace;white-space:pre-wrap;box-sizing:border-box;line-height:1.2;margin:0;padding:0;border:0;overflow-wrap: break-word;}:root{color-scheme:light dark}#p,#x,#o{width:100%;height:100%;}</style><div style="position:relative"><p id=p style="position:absolute;color:#888"></p><textarea id=x style="position:absolute;background:#0000" onscroll="p.scrollTop=x.scrollTop"></textarea></div><iframe id=o></iframe><script>let G="",t="",M=Math
+tK=t=>t.match(/[A-Za-z_][A-Za-z0-9_-]*|\d+|\s+|[^\w\s]/g)||[]
+bM=(t,N)=>{let w=tK(t),m={}
+for(let n=1;n<=N;n++)for(let i=0;i<w.length-n;i++){let k=w.slice(i,i+n).join("\0x01"),e=w[i+n];(m[k]||(m[k]={}))[e]=((m[k][e])|0)+1}return m}
+pk=(tk,m,N)=>{for(let n=M.min(N,tk.length);n>=1;n--){const k=tk.slice(-n).join("\0x01")
+const P=m[k]
+if(!P)continue
+let tt=0
+for(let lk in P)tt+=P[lk]
+let r=M.random()*tt
+for(const kk in P){r-=P[kk]
+if(r<=0)return kk}}return null}
+gn=(sd,m,N,ln)=>{const o=[...sd]
+for(let i=0;i<ln;i++){const ne=pk(o,m,N)
+if(!ne)break
+o.push(ne)
+}return o}
+uP=(e)=>{if(e.key=="Tab"&&G){x.value+=G}
+o.srcdoc=x.value
+const T=tK(x.value)
+mo=bM(x.value,8)
+G=gn(T,mo,4,8).slice(T.length).join("")
+p.innerText=G?x.value+G:""}
+x.onkeydown=uP
+x.oninput=uP</script>
