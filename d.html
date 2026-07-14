@@ -1,12 +1,39 @@
-<style>html,body{display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0;padding:0;height:100vh};*{text-align:center}:root {color-scheme:light dark}</style>
-<button onclick=UIswitch()>1) / •</button>
-<ul id=main>
-<li><input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button></li>
-<li><input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button></li>
-</ul>
+<style>html,body{display:flex;align-items:center;justify-content:center;flex-direction:column;margin:0;padding:0;height:100vh}*{text-align:center}:root {color-scheme:light dark}</style>
+<button id=st onclick="st()">🍅 start</button><button onclick="pa()" id=pa>🍅 pause</button><p id=ti>🍅 time:</p>
+<hr style="width:100%">
+<div id=main>
+<p><input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button></p>
+<p><input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button></p>
+</div>
 <button onclick=add()>add item</button>
 <script>
-add=()=>{const li=document.createElement("li");li.innerHTML=`<input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button>`;main.appendChild(li);}
+const WORK=1500,BREAK=300,L_BREAK=900;
+let mode=1,tL=WORK,int=null,isR=false,sCom=0
+ti.style.color="red"
+st=()=>{
+if(isR)return
+isR=true
+int=setInterval(tick,1000)}
+pa=()=>{
+clearInterval(int)
+isR=false}
+tick=()=>{tL--
+if(tL<0){sM()
+return}upD()}
+upD=()=>{ti.textContent=`🍅 time: ${String(Math.floor(tL/60)).padStart(2,"0")}:${String(tL%60).padStart(2,"0")}`}
+sM=()=>{
+if(mode===1){sCom++
+ti.style.color="#0f0"
+if(sCom%4===0){mode=0
+tL=L_BREAK
+alert()}else{mode=0
+tL=BREAK
+alert()}}else{mode=1
+tL=WORK
+ti.style.color="red"
+alert()}upD()}
+add=()=>{const li=document.createElement("p")
+li.innerHTML=`<input type="checkbox"><span contenteditable>item</span><button onclick=del(this)>del</button>`
+main.appendChild(li)}
 del=(e)=>{e.parentElement.remove()}
-UIswitch=()=>{const nT=main.tagName.toLowerCase()==="ul"?"ol":"ul";const nL=document.createElement(nT);nL.id=main.id;nL.className=main.className;nL.innerHTML=main.innerHTML;main.replaceWith(nL);}
 </script>

@@ -1,0 +1,11 @@
+below 1300 for http2, below 1400 for http3
+
+remove newlines,
+single-letterers,
+math -> let m=math;
+orientation.... -> let or=orientation....;
+use globals
+let x = () => {}
+
+
+for future: https://js13kgames.com https://js1k.com/
