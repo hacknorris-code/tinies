@@ -2,16 +2,19 @@
 <meta name=viewport content="width=device-width,initial-scale=1.0">
 <style>:root{color-scheme:light dark}a{border:2px solid #00f8;color:blue}div{background:#8888;}</style>
 <body style=background:#08f8;margin:0;height:100vh;display:flex;align-items:center;justify-content:center>
-<div id=win style=display:inline-block;position:absolute;resize:both;overflow:scroll><span id=bar><span id=tit style=padding:0%;margin:0%;></span><button style=float:right; onclick="fr.src='';tit.innerText=''">X</button></span><br><iframe style=width:100%;height:100%;border:0 width=500 height=400 name=des id=fr></iframe></div>
-<div style=position:fixed;bottom:0;width:100%;padding:0><a href=a.html target=des onclick=openL(this)>sheets</a> <a href=b.html target=des onclick=openL(this)>plot</a> <a href=c.html target=des onclick=openL(this)>editor</a> <a href=d.html target=des onclick=openL(this)>todo</a> <a href=e.html target=des onclick=openL(this)>paint</a> <a href=s.html target=des onclick=openL(this)>games</a></div></body>
+<div id=win style=display:flex;flex-direction:column;position:absolute;resize:both;overflow:hidden><span id=bar><span id=tit style=padding:0%;margin:0%;></span><button style=float:right; onclick="fr.src='';tit.innerText=''">X</button></span><iframe style=flex:1;width:100%;min-height:0;border:0 width=500 height=400 name=des id=fr></iframe></div>
+<div style=position:fixed;bottom:0;width:100%;padding:0><a href=a.html target=des onclick=oL(this)>sheets</a> <a href=b.html target=des onclick=oL(this)>plot</a> <a href=c.html target=des onclick=oL(this)>editor</a> <a href=d.html target=des onclick=oL(this)>todo</a> <a href=e.html target=des onclick=oL(this)>paint</a> <a href=s.html target=des onclick=oL(this)>games</a></div></body>
 <script>
-openL=e=>{tit.innerText=e.innerText}
+pt=fr.style.pointerEvents
+oL=e=>{tit.innerText=e.innerText}
 let dx,dy,drg=false
 bar.onmousedown=e=>{drg=true
+pt='none'
 dx=e.clientX-win.offsetLeft
 dy=e.clientY-win.offsetTop}
 document.onmousemove=e=>{if(!drg)return
 win.style.left=(e.clientX-dx)+"px"
 win.style.top=(e.clientY-dy)+"px"}
-document.onmouseup=_=>drg=false
+document.onmouseup=_=>{drg=false
+pt=''}
 </script>
