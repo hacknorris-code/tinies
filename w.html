@@ -1,0 +1,27 @@
+<style>*{background:#000;margin:20px auto;}#m{display:block}#pts{color:#0f0;max-width:fit-content;font-size:24px}</style><canvas id=m width=400 height=300></canvas><div id=pts>0</div><script>x=m.getContext("2d")
+aUni="\u25B2",bUni="\u25CF"
+const rand=()=>Math.floor(304*Math.random())+48
+const isBet=(x,y)=>x==y
+v={show:!1,x:0,y:0,z:0}
+x.font="64px sans"
+rng=()=>v.y=Math.round(crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32)
+load=()=>{x.textBaseline="top"
+x.clearRect(0,0,m.width,m.height)
+x.fillStyle="#00f"
+x.fillText(aUni,m.width/2-24,250)
+v.show&&(x.strokeStyle="#f00",x.lineWidth=2,x.beginPath(),x.moveTo(m.width/2,m.height+24),x.lineTo(m.width/2,m.height/2+24),x.lineTo(v.x*(m.width),m.height/2+24),x.stroke(),x.fillStyle="#ff0",x.fillText(bUni,v.y*m.width-24,m.height/2))}
+hit=()=>{
+pts.innerText++,v.show=!0,setTimeout(()=>{v.show=!1,load()},800)
+a=new AudioContext,b=a.createOscillator()
+b.connect(a.destination)
+b.start()
+setTimeout(()=>b.stop(),50)}
+hK=(e)=>{switch(e.keyCode){case 37:case 65:v.x=0,v.z=1
+break
+case 39:case 68:v.x=1,v.z=1
+break
+case 38:case 87:rng(),v.z!==0&&isBet(v.x,v.y)&&hit(),v.z=0}load()}
+window.onkeydown=hK
+rng()
+load()
+</script>
