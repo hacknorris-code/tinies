@@ -1,6 +1,5 @@
 <style>*{background:#000;margin:20px auto;}#m{display:block}#pts{color:#0f0;max-width:fit-content;font-size:24px}</style><canvas id=m width=400 height=300></canvas><div id=pts>0</div><script>x=m.getContext("2d")
 aUni="\u25B2",bUni="\u25CF", cUni="\u25C6"
-const rand=()=>Math.floor(304*Math.random())+48
 const is=(x,y)=>x==y
 v={show:!1,x:0,y:0}
 x.font="64px sans"
@@ -21,8 +20,7 @@ b.start()
 setTimeout(()=>b.stop(),40)}
 hK=(e)=>{switch(e.keyCode){case 37:case 65:v.x=0,is(v.x,v.y)&&hit(),rng()
 break
-case 39:case 68:v.x=1,is(v.x,v.y)&&hit(),rng()
-}
+case 39:case 68:v.x=1,is(v.x,v.y)&&hit(),rng()}
 load()}
 window.onkeydown=hK
 rng()

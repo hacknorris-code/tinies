@@ -31,7 +31,7 @@ G.translate(x,y)
 G.rotate(E)
 G.fillText(N,0,0)
 G.restore()
-d=((A-E+9.42)%6.28)-3.14
+d=((A-E+(M.PI*3))%(M.PI*2))-M.PI
 if(M.abs(d)<.12){
 S++
 i.innerHTML=S
