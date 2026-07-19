@@ -1,0 +1,40 @@
+<body style="background:#000;margin:0;color:#0f0;text-align:center" onclick="D()"><div id="i" style="font:24px sans;margin-top:20px">START</div><canvas id="m" width="400" height="300" style="display:block;margin:20px auto;background:linear-gradient(90deg,#444 1px,#0000 0)0 0/20px 20px,linear-gradient(#444 1px,#0000 0)0 0/20px 20px"></canvas><script>
+let x=30,y=280,sc=0,
+T={x:50,y:50},
+M=Math,
+G=m.getContext("2d"),
+R=()=>270*M.random();
+function D(){
+if(self.A)return;
+A=new(AudioContext||webkitAudioContext);
+o=A.createOscillator(),g=A.createGain(),f=A.createBiquadFilter(),f.type="lowpass",o.type="sawtooth",o.frequency.value=60,f.frequency.value=150,o.connect(f).connect(g).connect(A.destination);
+o.start();
+m.onmousemove=e=>{
+let r=m.getBoundingClientRect();
+x=e.clientX-r.left;
+y=e.clientY-r.top;
+};
+i.innerHTML=sc;
+}
+setInterval(()=>{
+T.x=((T.x+(Math.random()*8-4)+m.width)%m.width);
+T.y=((T.y+(Math.random()*8-4)+m.height)%m.height);
+x=Math.max(0,Math.min(m.width,x+(Math.random()*8-4)));
+y=Math.max(0,Math.min(m.height,y+(Math.random()*8-4)));
+if((x-T.x)*(x-T.x)+(y-T.y)*(y-T.y)<576){
+sc++
+i.innerHTML=sc
+T={x:R(),y:R()}
+a=new AudioContext,b=a.createOscillator()
+b.connect(a.destination)
+b.start()
+setTimeout(()=>b.stop(),50)
+}
+G.clearRect(0,0,400,300)
+G.font="40px sans"
+G.fillStyle="#0f0"
+G.fillText("▲",T.x-24,T.y+6)
+G.fillStyle="#f0f"
+G.fillText("●",x-24,y+6)
+},16)
+</script>
