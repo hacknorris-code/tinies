@@ -17,10 +17,10 @@ y=e.clientY-r.top;
 i.innerHTML=sc;
 }
 setInterval(()=>{
-T.x=((T.x+(Math.random()*8-4)+m.width)%m.width);
-T.y=((T.y+(Math.random()*8-4)+m.height)%m.height);
-x=Math.max(0,Math.min(m.width,x+(Math.random()*8-4)));
-y=Math.max(0,Math.min(m.height,y+(Math.random()*8-4)));
+T.x=((T.x+(M.random()*8-4)+m.width)%m.width);
+T.y=((T.y+(M.random()*8-4)+m.height)%m.height);
+x=M.max(0,M.min(m.width,x+(M.random()*8-4)));
+y=M.max(0,M.min(m.height,y+(M.random()*8-4)));
 if((x-T.x)*(x-T.x)+(y-T.y)*(y-T.y)<576){
 sc++
 i.innerHTML=sc

@@ -1,0 +1,41 @@
+<body style=margin:0;background:#000;color:#0f0;text-align:center onclick=D()><div id=i style="font:24px sans;margin-top:20px">START</div><canvas id=m width=400 height=400></canvas><script>M=Math,G=m.getContext`2d`,A=0,S=0,R=()=>M.random()*M.PI*2,E=R(),C=200,N="\u25CF",T="\u25B2";
+G.font="48px sans"
+G.textAlign="center"
+G.textBaseline="middle"
+D=async()=>{
+if(DeviceOrientationEvent?.requestPermission)
+try{await DeviceOrientationEvent.requestPermission()}catch(e){}
+ondeviceorientation=e=>A=e.alpha*M.PI/180
+i.innerHTML=S
+}
+setInterval(()=>{
+G.clearRect(0,0,400,400)
+G.strokeStyle="#0f0"
+G.lineWidth = 2;
+G.beginPath()
+G.moveTo(C,C)
+G.lineTo(C+140*M.sin(A),C-140*M.cos(A))
+G.stroke()
+G.lineWidth = 1;
+G.fillStyle="#f00"
+G.save()
+G.translate(C,C)
+G.rotate(A)
+G.fillText(T,0,0)
+G.restore()
+x=C+140*M.sin(E)
+y=C-140*M.cos(E)
+G.fillStyle="#0ff"
+G.save()
+G.translate(x,y)
+G.rotate(E)
+G.fillText(N,0,0)
+G.restore()
+d=((A-E+9.42)%6.28)-3.14
+if(M.abs(d)<.12){
+S++
+i.innerHTML=S
+E=R()
+}
+},16)
+</script>
