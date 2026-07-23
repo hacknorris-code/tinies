@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <meta name=viewport content="width=device-width,initial-scale=1.0">
-<style>:root{color-scheme:light dark}a{border:2px solid #00f8;color:blue}p{background:#8888;margin:0}.w{position:absolute;display:flex;flex-direction:column;width:50vw;height:50vh;resize:both;overflow:hidden}.bar{user-select:none}iframe{flex:1;border:0;width:100%;}</style>
+<style>:root{color-scheme:light dark}a{color:blue}p,a{background:#8888;margin:0}.w{position:absolute;display:flex;flex-direction:column;width:50vw;height:50vh;resize:both;overflow:hidden}.bar{user-select:none}iframe{flex:1;border:0;width:100%;}</style>
 <body style=background:#08f8;margin:0;height:100vh;display:flex;align-items:center;justify-content:center>
-<p style=position:fixed;bottom:0;width:100%;padding:0><a href=a.html onclick=oL(event,this)>sheets</a> <a href=b.html onclick=oL(event,this)>plot</a> <a href=c.html onclick=oL(event,this)>editor</a> <a href=d.html onclick=oL(event,this)>todo</a> <a href=e.html onclick=oL(event,this)>paint</a> <a href=s.html onclick=oL(event,this)>games</a></p></body>
+<p style=position:fixed;bottom:0;width:100%;padding:0 id=n></p></body>
 <script>
+document.body.onload=_=>{
+c={sheets:"a.html",plot:"b.html",editor:"c.html",todo:"d.html",paint:"e.html",games:"s.html"}
+n.innerHTML=Object.entries(c).map(([k,v])=>`<a href="${v}" onclick="oL(event,this)">${k}</a>`).join(" ");
+}
 oL=(e,a)=>{
 e.preventDefault();
 let w=document.createElement("p");
 w.className="w";
-w.style.left=Math.random()*150+"px";
-w.style.top=Math.random()*100+"px";
-w.innerHTML=`<p class=bar><span>${a.innerText}</span><button style=float:right>X</button></p><iframe src="${a.href}"></iframe>`;
+w.style.left="10vw";
+w.style.top="10vh";
+w.innerHTML=`<p class=bar><span>${a.innerText}</span><button style=float:right>X</button></p><iframe allow="accelerometer;magnetometer;gyroscope;microphone;camera;clipboard" src="${a.href}"></iframe>`;
 document.body.append(w);
 w.querySelector("button").onclick=()=>w.remove();
 drag(w);
