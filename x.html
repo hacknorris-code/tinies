@@ -17,10 +17,10 @@ y=e.clientY-r.top;
 i.innerHTML=sc;
 }
 setInterval(()=>{
-T.x=((T.x+(M.random()*8-4)+m.width)%m.width);
-T.y=((T.y+(M.random()*8-4)+m.height)%m.height);
-x=M.max(0,M.min(m.width,x+(M.random()*8-4)));
-y=M.max(0,M.min(m.height,y+(M.random()*8-4)));
+T.x=((T.x+(M.random()*16-8)+m.width)%m.width);
+T.y=((T.y+(M.random()*16-8)+m.height)%m.height);
+x=M.max(0,M.min(m.width,x+(M.random()*16-8)));
+y=M.max(0,M.min(m.height,y+(M.random()*16-8)));
 if((x-T.x)*(x-T.x)+(y-T.y)*(y-T.y)<576){
 sc++
 i.innerHTML=sc
@@ -28,7 +28,7 @@ T={x:R(),y:R()}
 a=new AudioContext,b=a.createOscillator()
 b.connect(a.destination)
 b.start()
-setTimeout(()=>b.stop(),50)
+b.stop(a.currentTime + 0.05)
 }
 G.clearRect(0,0,400,300)
 G.font="40px sans"

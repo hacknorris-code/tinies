@@ -1,5 +1,5 @@
 <style>*{background:#000;margin:20px auto;}#m{display:block}#pts{color:#0f0;max-width:fit-content;font-size:24px}</style><canvas id=m width=400 height=300></canvas><div id=pts>0</div><script>x=m.getContext("2d")
-aUni="\u25B2",bUni="\u25CF",x.font="64px sans",step=0,pA=0,M=Math;
+aUni="▲",bUni="●",x.font="64px sans",step=0,pA=0,M=Math;
 tA=M.random()*M.PI*2;
 x.textAlign="center";
 x.textBaseline="middle";
@@ -35,8 +35,7 @@ pts.innerText++
 tA=M.random()*M.PI*2
 a=new AudioContext,b=a.createOscillator()
 b.connect(a.destination)
-b.start()
-setTimeout(()=>b.stop(),80)}}
+b.stop(a.currentTime + 0.05)}}
 window.onclick=shoot
 window.onkeydown=shoot
 </script>

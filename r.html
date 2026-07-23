@@ -16,19 +16,19 @@ s=0
 sp={x:w,y:G-12,clr:0}
 loop=()=>{g.clearRect(0,0,w,h)
 g.fillStyle='#8f0'
-g.fillText('\u25CF',px,py)
+g.fillText('●',px,py)
 if(air){pv+=gV
 py+=pv
 if(py+PH>=G){py=G-PH
 pv=0
 air=0}}sp.x-=dx
 g.fillStyle='#f08'
-g.fillText('\u25B2',sp.x,sp.y)
+g.fillText('▲',sp.x,sp.y)
 if(!sp.clr&&sp.x+12<px){sp.clr=1
 pts.textContent++}else if(!air&&sp.x+12<px){a.resume().then(()=>{let b=a.createOscillator()
 b.connect(a.destination)
 b.start()
-setTimeout(()=>b.stop(),50)})
+b.stop(a.currentTime + 0.05)})
 sp.clr=1
 pts.textContent++}if(px<sp.x+12&&px+12>sp.x&&py<sp.y+12&&py+12>sp.y){py=G-PH
 pv=0

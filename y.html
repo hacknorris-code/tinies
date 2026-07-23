@@ -1,4 +1,4 @@
-<body style=margin:0;background:#000;color:#0f0;text-align:center onclick=D()><div id=i style="font:24px sans;margin-top:20px">START</div><canvas id=m width=400 height=400></canvas><script>M=Math,G=m.getContext`2d`,A=0,S=0,R=()=>M.random()*M.PI*2,E=R(),C=200,N="\u25CF",T="\u25B2";
+<body style=margin:0;background:#000;color:#0f0;text-align:center onclick=D()><div id=i style="font:24px sans;margin-top:20px">START</div><canvas id=m width=400 height=400></canvas><script>M=Math,G=m.getContext`2d`,A=0,S=0,R=()=>M.random()*M.PI*2,E=R(),C=200,N="●",T="▲",a=new AudioContext;
 G.font="48px sans"
 G.textAlign="center"
 G.textBaseline="middle"
@@ -35,6 +35,10 @@ d=((A-E+(M.PI*3))%(M.PI*2))-M.PI
 if(M.abs(d)<.12){
 S++
 i.innerHTML=S
+o=a.createOscillator()
+o.connect(a.destination)
+o.start()
+o.stop(a.currentTime + 0.05)
 E=R()
 }
 },16)

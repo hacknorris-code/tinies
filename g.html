@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <meta name=viewport content="width=device-width,initial-scale=1.0">
-<style>:root{color-scheme:light dark}a{border:2px solid #00f8;color:blue}div{background:#8888;}</style>
+<style>:root{color-scheme:light dark}a{border:2px solid #00f8;color:blue}p{background:#8888;margin:0}.w{position:absolute;display:flex;flex-direction:column;width:50vw;height:50vh;resize:both;overflow:hidden}.bar{user-select:none}iframe{flex:1;border:0;width:100%;}</style>
 <body style=background:#08f8;margin:0;height:100vh;display:flex;align-items:center;justify-content:center>
-<div id=win style=display:flex;flex-direction:column;position:absolute;resize:both;overflow:hidden><span id=bar><span id=tit style=padding:0%;margin:0%;></span><button style=float:right; onclick="fr.src='';tit.innerText=''">X</button></span><iframe style=flex:1;width:100%;min-height:0;border:0 width=500 height=400 name=des id=fr></iframe></div>
-<div style=position:fixed;bottom:0;width:100%;padding:0><a href=a.html target=des onclick=oL(this)>sheets</a> <a href=b.html target=des onclick=oL(this)>plot</a> <a href=c.html target=des onclick=oL(this)>editor</a> <a href=d.html target=des onclick=oL(this)>todo</a> <a href=e.html target=des onclick=oL(this)>paint</a> <a href=s.html target=des onclick=oL(this)>games</a></div></body>
+<p style=position:fixed;bottom:0;width:100%;padding:0><a href=a.html onclick=oL(event,this)>sheets</a> <a href=b.html onclick=oL(event,this)>plot</a> <a href=c.html onclick=oL(event,this)>editor</a> <a href=d.html onclick=oL(event,this)>todo</a> <a href=e.html onclick=oL(event,this)>paint</a> <a href=s.html onclick=oL(event,this)>games</a></p></body>
 <script>
-pt=fr.style.pointerEvents
-oL=e=>{tit.innerText=e.innerText}
-let dx,dy,drg=false
-bar.onmousedown=e=>{drg=true
-pt='none'
-dx=e.clientX-win.offsetLeft
-dy=e.clientY-win.offsetTop}
-document.onmousemove=e=>{if(!drg)return
-win.style.left=(e.clientX-dx)+"px"
-win.style.top=(e.clientY-dy)+"px"}
-document.onmouseup=_=>{drg=false
-pt=''}
+oL=(e,a)=>{
+e.preventDefault();
+let w=document.createElement("p");
+w.className="w";
+w.style.left=Math.random()*150+"px";
+w.style.top=Math.random()*100+"px";
+w.innerHTML=`<p class=bar><span>${a.innerText}</span><button style=float:right>X</button></p><iframe src="${a.href}"></iframe>`;
+document.body.append(w);
+w.querySelector("button").onclick=()=>w.remove();
+drag(w);
+}
+function drag(w){
+const b=w.querySelector(".bar")
+let dx,dy,dg=false
+b.onpointerdown=e=>{dg=true;dx=e.clientX-w.offsetLeft;dy=e.clientY-w.offsetTop;}
+b.onpointermove=e=>{if(!dg) return;w.style.left=e.clientX-dx+"px";w.style.top=e.clientY-dy+"px"}
+b.onpointerup=_=>{dg=false;}
+}
 </script>

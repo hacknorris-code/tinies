@@ -1,36 +1,33 @@
-<style>*{background:#000;margin:20px auto}#m{display:block}#pts{color:#0f0;max-width:fit-content;font:24px sans-serif}</style><canvas id=m width=400 height=300></canvas><div id=pts>0</div><script>x=m.getContext("2d")
-pUni="\u25CB"
-cUni="\u25B3"
-c2Uni="\u25BD"
-const rand=()=>Math.floor(304*Math.random())+48
+<style>*{background:#000;margin:20px auto}#m{display:block}#pts{color:#0f0;max-width:fit-content;font-size:24px}</style><canvas id=m width=400 height=300></canvas><div id=pts>0</div><script>x=m.getContext("2d"),a=new AudioContext,M=Math
+pUni="○"
+cUni="△"
+c2Uni="▽"
+const rand=()=>M.floor(304*M.random())+48
 let p={x:168}
 let t={x:rand()}
 let b={x:rand()}
-let topGood=Math.random()<.5
+let topGood=M.random()<.5
 let last=200
-x.font="48px sans"
+x.font="48px mono"
 beep=()=>{
-a=new AudioContext
 o=a.createOscillator()
 o.connect(a.destination)
 o.start()
-setTimeout(()=>o.stop(),50)
+o.stop(a.currentTime + 0.05)
 }
 reroll=()=>{
 t.x=rand()
 b.x=rand()
-topGood=Math.random()<.5
+topGood=M.random()<.5
 }
-hit=e=>Math.abs(p.x-e)<24
+hit=e=>M.abs(p.x-e)<24
 draw=()=>{
 x.clearRect(0,0,m.width,m.height)
 x.textBaseline="top"
 x.fillStyle="#888"
 x.fillText(pUni,p.x,0)
 x.fillText(pUni,p.x,m.height-48)
-x.fillStyle="#888"
 x.fillText(c2Uni,t.x,0)
-x.fillStyle="#888"
 x.fillText(cUni,b.x,m.height-48)
 }
 onmousemove=e=>{
