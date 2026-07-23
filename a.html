@@ -1,7 +1,7 @@
-<style>html,body{display:flex;align-items:center;justify-content:center;margin:0;padding:0;height:100vh;};*{text-align:center;}:root{color-scheme:light dark;}</style>
+<style>html,body{display:flex;align-items:center;justify-content:center;margin:0;padding:0;height:100vh;}*{text-align:center;}:root{color-scheme:light dark;}</style>
 <table id=nav><tr><td onclick=del(0)>-</td><td onclick=del(1)>-</td><td></td></tr><tr><td onclick=del(-1)>-</td><td><table id=main border=1><tr><td>•</td><td>•</td></tr><tr><td>•</td><td>•</td></tr></table></td><td onclick=add(-1)>+</td></tr><tr><td></td><td onclick=add(1)>+</td><td onclick=add(0)>+</td></tr></table>
 <script>
-del=(x)=>{switch(x){case 0:delCol();delRow();break;case 1:delCol();break;case -1:delRow();break;};init();}
+del=(x)=>{switch(x){case 0:delCol();delRow();break;case 1:delRow();break;case -1:delCol();break;};init();}
 add=(y)=>{switch(y){case 0:addCol();addRow();break;case 1:addRow();break;case -1:addCol();break;};init();}
 delCol=()=>{for(let r of main.rows)r.cells.length&&r.deleteCell(-1)}
 delRow=()=>main.rows.length&&main.deleteRow(-1)
