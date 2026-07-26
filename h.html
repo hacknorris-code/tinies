@@ -1,0 +1,18 @@
+<script>
+
+document.onclick = async _ => { 
+const v = document.createElement("video");
+v.srcObject = await navigator.mediaDevices.getUserMedia({video:true});
+await v.play();
+
+const rec = new MediaRecorder(v.srcObject);
+let data = [];
+
+rec.ondataavailable = e => data.push(e.data);
+rec.onstop = () =>
+download(new Blob(data, {type:"video/webm"}));
+
+rec.start();
+setTimeout(() => rec.stop(), 1000);
+    }
+</script>

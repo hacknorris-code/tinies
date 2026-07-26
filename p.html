@@ -1,0 +1,46 @@
+<body style=background:#000;margin:0;color:#0f0;text-align:center onclick=D()><div id=o style="font:24px sans;margin-top:20px">START</div><canvas id=m width=400 height=300 style="display:block;margin:20px auto;background:linear-gradient(90deg,#444 1px,#0000 0)0 0/20px 20px,linear-gradient(#444 1px,#0000 0)0 0/20px 20px"></canvas><script>D=_=>{o.innerText="0"
+const c=m.getContext`2d`
+const W=m.width,H=m.height
+let tch=[],en={x:Math.random()*W-9,y:Math.random()*H-9},tog=0
+m.oncontextmenu=(e)=>e.preventDefault()
+tH=(e)=>{e.preventDefault();tch=[...e.touches].map(t=>({x:t.clientX,y:t.clientY}));}
+m.addEventListener("touchmove",tH,{passive:false});
+m.ontouchend=tH;
+m.ontouchstart=tH;
+let p={x:W/2,y:H/2}
+let v={x:0,y:0}
+const G=0.5
+loop=_=>{
+let gx=0,gy=0
+if(tch.length){
+tch.forEach(t=>{gx+=t.x;gy+=t.y});
+gx/=tch.length
+gy/=tch.length
+let dx=gx-p.x
+let dy=gy-p.y
+if(dx>W/2)dx-=W
+if(dx<-W/2)dx+=W
+if(dy>H/2)dy-=H
+if(dy<-H/2)dy+=H
+const d=Math.hypot(dx,dy)||1
+v.x+=(dx/d)*G
+v.y+=(dy/d)*G}
+v.x*=0.96
+v.y*=0.96
+p.x=(p.x+v.x+W)%W
+p.y=(p.y+v.y+H)%H
+tog?ic=["▲","●"]:ic=["●","▲"]
+c.clearRect(0,0,W,H)
+c.font="40px sans"
+c.fillStyle="#fff"
+c.fillText(ic[0],p.x,p.y)
+c.fillStyle="#fff"
+c.fillText(ic[1],en.x,en.y)
+if (en.x-9<p.x+9&&en.x+9>p.x-9&&en.y-9<p.y+9&&en.y+9>p.y-9){
+a=new AudioContext,b=a.createOscillator(),b.connect(a.destination),b.start(),b.stop(a.currentTime + 0.05)
+en={x:Math.random()*W-9,y:Math.random()*H-9}
+o.innerText++
+tog=!tog
+}requestAnimationFrame(loop)}
+loop()}
+</script>
