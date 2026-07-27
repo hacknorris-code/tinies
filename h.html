@@ -1,7 +1,9 @@
+<video id=prv></video>
+<button id=cont></button>
 <script>
-document.onclick = async function() { 
+cont.onclick = async function() { 
 try {
-const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+const stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: "environment",} });
 const v = document.createElement("video");
 v.srcObject = stream;
 document.body.appendChild(v);
