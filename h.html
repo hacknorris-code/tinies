@@ -1,18 +1,32 @@
 <script>
-
-document.onclick = async _ => { 
+document.onclick = async function() { 
+try {
+const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 const v = document.createElement("video");
-v.srcObject = await navigator.mediaDevices.getUserMedia({video:true});
+v.srcObject = stream;
+document.body.appendChild(v);
 await v.play();
-
-const rec = new MediaRecorder(v.srcObject);
-let data = [];
-
-rec.ondataavailable = e => data.push(e.data);
-rec.onstop = () =>
-download(new Blob(data, {type:"video/webm"}));
-
+const rec = new MediaRecorder(stream);
+let chunks = [];
+rec.ondataavailable = e => {
+if (e.data.size > 0) {
+chunks.push(e.data);
+}
+};
+rec.onstop = () => {
+const blob = new Blob(chunks, { type: 'video/webm' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement("a");
+a.href = url;
+a.download = "recording.webm";
+a.click();
+URL.revokeObjectURL(url);
+};
 rec.start();
-setTimeout(() => rec.stop(), 1000);
-    }
+setTimeout(() => rec.stop(), 2000);
+} catch (err) {
+console.error("Error:", err);
+alert("Failed to start recording: " + err.message);
+}
+}
 </script>

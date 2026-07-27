@@ -2,8 +2,10 @@
 let x=30,y=280,sc=0,
 T={x:50,y:50},
 M=Math,
-G=m.getContext("2d"),
-R=()=>270*M.random();
+G=m.getContext`2d`,
+rar=new Uint32Array(1)
+rng=_=>{return crypto.getRandomValues(rar)[0]/2**32};
+R=_=>270*rng();
 function D(){
 if(self.A)return;
 A=new(AudioContext||webkitAudioContext);
@@ -17,10 +19,10 @@ y=e.clientY-r.top;
 i.innerHTML=sc;
 }
 setInterval(()=>{
-T.x=((T.x+(M.random()*16-8)+m.width)%m.width);
-T.y=((T.y+(M.random()*16-8)+m.height)%m.height);
-x=M.max(0,M.min(m.width,x+(M.random()*16-8)));
-y=M.max(0,M.min(m.height,y+(M.random()*16-8)));
+T.x=((T.x+(rng()*16-8)+m.width)%m.width);
+T.y=((T.y+(rng()*16-8)+m.height)%m.height);
+x=M.max(0,M.min(m.width,x+(rng()*16-8)));
+y=M.max(0,M.min(m.height,y+(rng()*16-8)));
 if((x-T.x)*(x-T.x)+(y-T.y)*(y-T.y)<576){
 sc++
 i.innerHTML=sc
