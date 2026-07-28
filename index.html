@@ -8,15 +8,16 @@
 <meta content=/tinies/q.png property=og:image>
 <meta content=/tinies/q.png property=twitter:image>
 <meta content=summary_large_image property=twitter:card>
-<meta content=/g.html property=twitter:url>
 <script>
 (async()=>{d=await navigator.storage.getDirectory()
 get=async p=>{try{return await(await d.getFileHandle(p)).getFile().then(f=>f.text())}catch{return null}}
 set=async(p,c)=>{let f=await d.getFileHandle(p,{create:1}),w=await f.createWritable();await w.write(c);await w.close()}
 if(!await get('b.etc')){
-await set('ui.etc',`:root{color-scheme:light dark}a{color:blue}p,a{background:#8888;margin:0}.w{position:absolute;display:flex;flex-direction:column;width:50vw;height:50vh;resize:both;overflow:hidden}.bar{user-select:none}iframe{flex:1;border:0;width:100%;}body{background:#08f8;margin:0;height:100vh;display:flex;align-items:center;justify-content:center}`)
-await set('apps.etc',JSON.stringify({sheets:"a.html",plot:"b.html",editor:"c.html",todo:"d.html",paint:"e.html",camera:"h.html",browser:"j.html",games:"s.html"}
-))
+await set('ui.etc',`:root{color-scheme:light dark}p,a{background:#8888;margin:0}body{margin:0;}.w{width:50vw;height:50vh;}`)
+await set('apps.etc',JSON.stringify({sheets:"a.html",plot:"b.html",editor:"c.html",todo:"d.html",paint:"e.html",camera:"h.html",browser:"j.html",games:"s.html"}))
+await set('perms.etc',"accelerometer;gyroscope;camera;")
+await set('title.etc',"<button style=float:right>X</button></p>")
+await set('winevt.etc',"b.onpointermove=e=>e.buttons&&(w.style.left=w.offsetLeft+e.movementX+'px',w.style.top=w.offsetTop+e.movementY+'px')")
 await set('b.etc',1)
 }})();
 </script>

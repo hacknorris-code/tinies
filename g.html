@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <title>tiny desktop</title>
 <meta name=viewport content="width=device-width,initial-scale=1.0">
+<link rel=manifest href=./manifest.webmanifest>
+<style>
+.bar{user-select:none}iframe{flex:1;border:0;width:100%;}body{height:100vh;display:flex;align-items:center;justify-content:center}.w{position:absolute;display:flex;flex-direction:column;resize:both;overflow:hidden;left:10vw;top:10vh}
+</style>
 <body>
 <p style=position:fixed;bottom:0;padding:0;width:100% id=n></p></body>
 <script>
+navigator.serviceWorker.register("./wrk.js");
 (async()=>{d=await navigator.storage.getDirectory();
 get=async p=>{try{return await(await d.getFileHandle(p)).getFile().then(f=>f.text())}catch{return null}}
 set=async(p,c)=>{let f=await d.getFileHandle(p,{create:1}),w=await f.createWritable();await w.write(c);await w.close()}
-if(!await get('b.etc')) location.href("index.html")
+if(!await get('b.etc'))window.open("index.html")
 ui=await get("ui.etc")
 const st=document.createElement("style");
 st.textContent=ui;
 document.head.append(st);
 c=JSON.parse(await get('apps.etc'))
 n.innerHTML=Object.entries(c).map(([k,v])=>`<a href=${v} onclick=oL(event,this)>${k}</a>`).join(" ")
-oL=async (e,a)=>{
+oL=async(e,a)=>{
 e.preventDefault()
 let w=document.createElement("p")
 w.className="w"
-w.style.left="10vw"
-w.style.top="10vh"
-w.innerHTML=`<p class=bar><span>${a.innerText}</span><button style=float:right>X</button></p><iframe allow="accelerometer;magnetometer;gyroscope;microphone;camera;gamepad;midi;usb;bluetooth;geolocation" src=${a.href}></iframe>`
+w.innerHTML=`<p class=bar><span>${a.innerText}</span>${await get("title.etc")}<iframe allow="${await get("perms.etc")}"src=${a.href}></iframe>`
 document.body.append(w)
 w.querySelector("button").onclick=()=>w.remove()
-drag(w)
+wev(w)
 }
-function drag(w){
+wev=async (w)=>{
 const b=w.querySelector(".bar")
-let dx,dy,dg=false
-b.onpointerdown=e=>{dg=true;dx=e.clientX-w.offsetLeft;dy=e.clientY-w.offsetTop}
-b.onpointermove=e=>{if(!dg) return;w.style.left=e.clientX-dx+"px";w.style.top=e.clientY-dy+"px"}
-b.onpointerup=_=>dg=false
+eval(await get("winevt.etc"))
 }})();
 </script>
