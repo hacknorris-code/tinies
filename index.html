@@ -1,5 +1,4 @@
-<meta http-equiv = "refresh" content = " 0 ; url = ./g.html"/>
-<title>tiny games</title>
+<meta http-equiv="refresh"content="0;url=./g.html"/>
 <meta content="tiny desktop"name=title>
 <meta content="tiny desktop"name=twitter:title>
 <meta content="tiny desktop"name=og:title>
@@ -10,3 +9,14 @@
 <meta content=/tinies/q.png property=twitter:image>
 <meta content=summary_large_image property=twitter:card>
 <meta content=/g.html property=twitter:url>
+<script>
+(async()=>{d=await navigator.storage.getDirectory()
+get=async p=>{try{return await(await d.getFileHandle(p)).getFile().then(f=>f.text())}catch{return null}}
+set=async(p,c)=>{let f=await d.getFileHandle(p,{create:1}),w=await f.createWritable();await w.write(c);await w.close()}
+if(!await get('b.etc')){
+await set('ui.etc',`:root{color-scheme:light dark}a{color:blue}p,a{background:#8888;margin:0}.w{position:absolute;display:flex;flex-direction:column;width:50vw;height:50vh;resize:both;overflow:hidden}.bar{user-select:none}iframe{flex:1;border:0;width:100%;}body{background:#08f8;margin:0;height:100vh;display:flex;align-items:center;justify-content:center}`)
+await set('apps.etc',JSON.stringify({sheets:"a.html",plot:"b.html",editor:"c.html",todo:"d.html",paint:"e.html",camera:"h.html",browser:"j.html",games:"s.html"}
+))
+await set('b.etc',1)
+}})();
+</script>

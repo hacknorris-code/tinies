@@ -1,0 +1,29 @@
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}body,html{height:100vh;margin:0;padding:0}</style>
+<div style=float:left;width:50%><ul id=side></ul></div>
+<div style=float:left;width:50%;height:100%;display:flex;flex-direction:column;><p>
+<input id=main value="https://marginalia-search.com" style=field-sizing:content;><button id=star onclick=add()>★</button><button type=submit onclick="out.src=main.value;">⮷</button>
+</p><iframe id=out src="https://marginalia-search.com" style=width:100%;flex-grow:1;></iframe><div><script>
+get=async (p,d)=>{try{return await(await d.getFileHandle(p)).getFile().then(f=>f.text())}catch{return null}}
+set=async(p,d,c)=>{let f=await d.getFileHandle(p,{create:1}),w=await f.createWritable();await w.write(c);await w.close()} 
+ref=async _=>{
+d=await navigator.storage.getDirectory()
+apps=JSON.parse(await get("apps.etc",d))
+side.innerHTML=""
+for(const[k,v]of Object.entries(apps)){
+side.innerHTML+=`<li>${k} : <a href='${v}'>${v}</a> <button onclick='dlt("${k}")'>☒</button></li>`}
+}
+add = async _ => {nm=prompt("enter app name:")
+d=await navigator.storage.getDirectory()
+data = JSON.parse(await get("apps.etc",d))
+data[nm]=out.src 
+await set("apps.etc",d,JSON.stringify(data))
+await ref()}
+dlt=async x=>{d=await navigator.storage.getDirectory()
+data=JSON.parse(await get("apps.etc",d))
+delete data[x]
+await set("apps.etc",d,JSON.stringify(data))
+await ref()}
+(async()=>{
+await ref()
+})();
+</script>
