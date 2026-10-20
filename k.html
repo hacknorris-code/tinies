@@ -1,0 +1,21 @@
+<style>html,body{margin:0;height:100%;overflow:hidden}:root{color-scheme:light dark}#app{width:100%;height:100%;position:relative}.n{position:absolute;min-width:40px;min-height:20px;padding:8px;border:2px solid;cursor:grab}svg{position:absolute;width:100%;height:100%;pointer-events:none}</style><div id=app><svg id=s></svg></div><script>
+const el=document.createElement('div');el.style.color='AccentColor';app.append(el);const color=getComputedStyle(el).color;el.remove();
+let ns=[],id=0,links=[]
+function add(x,y,p){
+let n=document.createElement('div');n.className='n';n.contentEditable="true";n.textContent='node '+(id++)
+n.style.left=x+'px';n.style.top=y+'px';app.append(n);ns.push(n)
+if(p)links.push([p,n])
+n.onpointermove=e=>e.buttons&&(n.style.left=n.offsetLeft+e.movementX+'px',n.style.top=n.offsetTop+e.movementY+'px',draw())
+n.onpointerdown=e=>e.stopPropagation()
+n.oncontextmenu=e=>(e.preventDefault(),add(n.offsetLeft+100,n.offsetTop+50,n))
+n.ondblclick=e=>{n.remove(),ns=ns.filter(n=>n!==n),links=links.filter(l=>l[0]!==n&&l[1]!==n),draw()}
+return n}
+app.onpointerdown=e=>add(e.offsetX,e.offsetY,ns.at(-1))
+function draw(){
+s.innerHTML=links.map(([a,b])=>{
+let A=a.getBoundingClientRect(),B=b.getBoundingClientRect()
+return `<line stroke="${color}" stroke-width="2" x1="${A.left+A.width/2}" y1="${A.top+A.height/2}" x2="${B.left+B.width/2}" y2="${B.top+B.height/2}"/>`
+}).join('')}
+add(100,100)
+setInterval(draw,50)
+</script>

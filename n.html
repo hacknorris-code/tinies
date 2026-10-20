@@ -1,0 +1,42 @@
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}body,html{height:100vh;margin:0;padding:0}</style>
+<ul>
+<li>titlebar options:</li><textarea id=title></textarea>
+<li>gesture options:</li><textarea id=gest></textarea>
+<li>applet options:</li><textarea id=appl></textarea>
+<li>style options:</li><textarea id=ui></textarea>
+</ul>
+<button id=save>SAVE</button>
+<hr><hr>
+<button style=color:red id=reset>FACTORY RESET</button>
+<script src=api.js></script>
+<script>
+(async()=>{
+let id=0;
+const pending={};
+token=localStorage.getItem('sys_id')
+addEventListener("message",e=>{if(e.data?.id in pending){pending[e.data.id](e.data.r);delete pending[e.data.id];}});
+const call=(cmd,data={})=>{return new Promise(resolve=>{const i=id++;pending[i]=resolve;parent.postMessage({cmd:cmd,id:i,token:token,...data},location.origin);});}
+console.log("hi")
+title.innerText = await call("getf",{name:"title.sys"})
+gest.innerText = await call("getf",{name:"winevt.sys"})
+appl.innerText = await call("getf",{name:"applets.sys"})
+ui.innerText = await call("getf",{name:"ui.sys"})
+reset.onclick = async() => {
+if(confirm("do you really want to erase all system data?")){
+x=await(await navigator.storage.getDirectory()).removeEntry("main",{recursive:true});
+indexedDB.deleteDatabase("mydb");
+await call("f5",{})
+}}
+save.onclick=async()=>{
+console.log(title.value)
+console.log(gest.value)
+console.log(appl.value)
+console.log(ui.value)
+await call("setf",{name:"title.sys",cont:title.value})
+await call("setf",{name:"winevt.sys",cont:gest.value})
+await call("setf",{name:"applets.sys",cont:appl.value})
+await call("setf",{name:"ui.sys",cont:ui.value})
+await call("f5",{})
+}
+})();
+</script>

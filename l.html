@@ -1,0 +1,48 @@
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}body,html{height:100vh;margin:0;padding:0}body{display:flex;flex-direction:column}</style>
+<div id=out style=flex-grow:1></div>
+<input style=width:100% id=inp>
+<script>
+(async()=>{
+token=localStorage.getItem('sys_id')
+print=(type,color,...args)=>{
+const line=document.createElement("div");
+line.style.color=color
+line.textContent=`[${type}] `+args.map(String).join(" ");
+out.appendChild(line);
+}
+openWindow=(title,url)=>{
+window.parent.postMessage({cmd:"open",title:title,url:url,token:token},"*");
+}
+
+const oldLog=console.log,oldWarn=console.warn,oldError=console.error,oldInfo=console.info,oldTable=console.table;
+
+console.log=(...args)=>{print("LOG","blue",...args);oldLog(...args);};
+
+console.info=(...args)=>{print("INFO","cyan",...args);oldLog(...args);};
+console.table=(...args)=>{for(const[index,arg]of args[0].entries()){print(`TABLE - ${index}`,"purple",...arg);}oldTable(...args);};
+
+console.warn=(...args)=>{print("WARN","orange",...args);oldWarn(...args);};
+
+console.error=(...args)=>{print("ERROR","red",...args);oldError(...args);};
+
+window.addEventListener("error",e=>{print("ERROR","red",e.message);});
+
+window.addEventListener("unhandledrejection",e=>{print("PROMISE","orange",e.reason);});
+
+eww=(input)=>{
+return Function('"use strict";return('+input+')')();
+}
+inp.onkeydown = e => {
+if (e.key !== "Enter") return;
+
+try {
+print("INPUT","green",inp.value)
+console.log(eww(inp.value));
+} catch (err) {
+console.error(err);
+}
+
+inp.value = "";
+};
+})();
+</script>

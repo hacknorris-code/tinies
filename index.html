@@ -1,4 +1,4 @@
-<meta http-equiv="refresh"content="0;url=./g.html"/>
+<!-- <meta http-equiv="refresh"content="0;url=./g.html"/> -->
 <meta content="tiny desktop"name=title>
 <meta content="tiny desktop"name=twitter:title>
 <meta content="tiny desktop"name=og:title>
@@ -8,16 +8,19 @@
 <meta content=/tinies/q.png property=og:image>
 <meta content=/tinies/q.png property=twitter:image>
 <meta content=summary_large_image property=twitter:card>
+<script src=./api.js></script>
 <script>
-(async()=>{d=await navigator.storage.getDirectory()
-get=async p=>{try{return await(await d.getFileHandle(p)).getFile().then(f=>f.text())}catch{return null}}
-set=async(p,c)=>{let f=await d.getFileHandle(p,{create:1}),w=await f.createWritable();await w.write(c);await w.close()}
-if(!await get('b.etc')){
-await set('ui.etc',`:root{color-scheme:light dark}p,a{background:#8888;margin:0}body{margin:0;}.w{width:50vw;height:50vh;}`)
-await set('apps.etc',JSON.stringify({sheets:"a.html",plot:"b.html",editor:"c.html",todo:"d.html",paint:"e.html",camera:"h.html",browser:"j.html",games:"s.html"}))
-await set('perms.etc',"accelerometer;gyroscope;camera;")
-await set('title.etc',"<button style=float:right>X</button></p>")
-await set('winevt.etc',"b.onpointermove=e=>e.buttons&&(w.style.left=w.offsetLeft+e.movementX+'px',w.style.top=w.offsetTop+e.movementY+'px')")
-await set('b.etc',1)
-}})();
+navigator.serviceWorker.register("./wrk.js",{ scope:'./'});
+(async()=>{
+await aR;
+if(!await getf('boot')){
+localStorage.setItem('sys_id',crypto.randomUUID())
+await setf('ui.sys',`:root{color-scheme:light dark}p,a{background:#8888;margin:0}body{margin:0;}.w{width:50vw;height:50vh;}`)
+await setf('apps.sys',JSON.stringify({sheets:"a.html",plot:"b.html",editor:"c.html",todo:"d.html",paint:"e.html",files:"f.html",camera:"h.html",browser:"j.html",nodes:"k.html",terminal:"l.html",settings:"n.html",games:"s.html",info:"i.html"}))
+await setf('perms.sys',"accelerometer;gyroscope;camera;")
+await setf('title.sys',"<button style=float:right>X</button>")
+await setf('winevt.sys',"bar.onpointermove=e=>e.buttons&&(win.style.left=win.offsetLeft+e.movementX+'px',win.style.top=win.offsetTop+e.movementY+'px')")
+await setf('boot',1)
+await setf('applets.sys','{"time":{"icon":"⌚","onclick":"alert(new Date)"},"reboot":{"icon":"🔌","onclick":"location.reload()"}}')
+}location.href="g.html"})();
 </script>

@@ -1,1 +1,17 @@
-<style>body{display:flex;margin:0;height:100vh}#i,#o{flex:1;min-width:0;}:root{color-scheme:light dark}</style><textarea id=i></textarea><iframe id=o></iframe><script>m=()=>o.srcdoc=i.value;i.oninput=m</script>
+<style>:root{color-scheme:light dark}*{box-sizing:border-box}body,html{height:100vh;margin:0}#t,#out{width:50%;height:100%;float:left}</style><script src=api.js></script><input type=file id=i multiple><div id=t></div><iframe id=out sandbox="allow-scripts"></iframe><script>
+(async()=>{await aR;
+let db=[];
+async function rfdb(){
+db=(await getf("home.fs")||"").trim().split("\n").filter(Boolean);
+let tr={};
+for(let l of db){let [p,n]=l.split(";"),o=tr;for(let x of (p?p+"/":"")+n?((p?p+"/":"")+n).split("/"):[])o=o[x]??={};o._=1}
+function draw(o,p=""){return Object.keys(o).filter(x=>x!="_").map(n=>{let q=p?p+"/"+n:n,v=o[n],d=Object.keys(v).some(x=>x!="_");return `<details ${d?"":"open"}><summary>${n}</summary>${d?draw(v,q):`<button data-f="${q}">Open</button><button data-d="${q}">Del</button>`}</details>`}).join("")}
+t.innerHTML=draw(tr)}
+t.onclick=async e=>{
+let b=e.target;if(b.dataset.f){let n=b.dataset.f,l=db.find(x=>{let [p,f]=x.split(";");return (p?p+"/":"")+f===n});out.src=l?.split(";").slice(3).join(";")||""}
+if(b.dataset.d&&confirm("Delete "+b.dataset.d+"?")){let n=b.dataset.d;await setf("home.fs",db.filter(x=>{let [p,f]=x.split(";");return (p?p+"/":"")+f!==n}).join("\n")+"\n");rfdb()}
+};
+i.onchange=async()=>{let p=(prompt("Path?")||"").replaceAll("\\","/").split("/").filter(Boolean).join("/");for(let f of i.files){let r=new FileReader;await new Promise((res,rej)=>{r.onload=()=>{(async()=>{await setf("home.fs",`${await getf("home.fs")||""}\n${p};${f.name};${Date.now()};${r.result}\n`);rfdb();res();})().catch(rej);};r.readAsDataURL(f)});}};
+rfdb()
+})();
+</script>

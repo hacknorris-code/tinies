@@ -1,34 +1,32 @@
-<video id=prv></video>
-<button id=cont></button>
+<style>
+html, body {
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+margin: 0;
+padding: 0;
+height: 100vh;
+}
+* { text-align: center; }
+:root { color-scheme: light dark; }
+</style>
+<video id="prv" style="flex-grow:1;width:100%"></video><br>
+<button id="cont" style="width:50px;height:50px;border-radius:25px;user-select:none"></button><br>
 <script>
-cont.onclick = async function() { 
-try {
-const stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: "environment",} });
-const v = document.createElement("video");
-v.srcObject = stream;
-document.body.appendChild(v);
-await v.play();
-const rec = new MediaRecorder(stream);
-let chunks = [];
-rec.ondataavailable = e => {
-if (e.data.size > 0) {
-chunks.push(e.data);
-}
-};
-rec.onstop = () => {
-const blob = new Blob(chunks, { type: 'video/webm' });
-const url = URL.createObjectURL(blob);
-const a = document.createElement("a");
-a.href = url;
-a.download = "recording.webm";
-a.click();
-URL.revokeObjectURL(url);
-};
-rec.start();
-setTimeout(() => rec.stop(), 2000);
-} catch (err) {
-console.error("Error:", err);
-alert("Failed to start recording: " + err.message);
-}
-}
+let stream;
+let rec;
+let chunks=[];
+let initialized=false;
+async function init(){if(initialized)return;
+stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment",frameRate:{ideal:120}}});
+prv.srcObject = stream;
+await prv.play();
+rec=new MediaRecorder(stream);
+rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+rec.onstop=()=>{const blob=new Blob(chunks,{type:"video/webm"});
+chunks=[];const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="recording.webm";a.click();URL.revokeObjectURL(url);};
+initialized = true;}
+cont.onpointerdown=async()=>{await init();if(rec.state==="inactive"){chunks=[];rec.start();}};
+cont.onpointerup=()=>{if(rec&&rec.state==="recording"){rec.stop();}};
 </script>

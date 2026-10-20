@@ -3,7 +3,7 @@
     "background_color": "#8888",
     "display": "standalone",
     "scope": "./",
-    "start_url": "./g.html",
+    "start_url": "./index.html",
     "name": "tiny desktop",
     "short_name": "desktop",
     "categories":["utilities"],
