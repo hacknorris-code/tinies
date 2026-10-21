@@ -4,24 +4,23 @@
 <input id=main value="https://marginalia-search.com" style=field-sizing:content;><button id=star onclick=add()>★</button><button type=submit onclick="out.src=main.value;">⮷</button>
 </p><iframe id=out src="https://marginalia-search.com" style=width:100%;flex-grow:1; sandbox="allow-scripts"></iframe><div><script src=api.js></script><script>
 ref=async _=>{
-d=await navigator.storage.getDirectory()
-apps=JSON.parse(await getf("apps.sys",d))
+apps=JSON.parse(await getf("apps.sys"))
 side.innerHTML=""
 for(const[k,v]of Object.entries(apps)){
 side.innerHTML+=`<li>${k} : <a href='${v}'>${v}</a> <button onclick='dlt("${k}")'>☒</button></li>`}
 }
 add = async _ => {nm=prompt("enter app name:")
-d=await navigator.storage.getDirectory()
-data = JSON.parse(await getf("apps.sys",d))
+data = JSON.parse(await getf("apps.sys"))
 data[nm]=out.src 
-await setf("apps.sys",d,JSON.stringify(data))
+await setf("apps.sys",JSON.stringify(data))
 await ref()}
-dlt=async x=>{d=await navigator.storage.getDirectory()
-data=JSON.parse(await getf("apps.sys",d))
+dlt=async x=>{
+data=JSON.parse(await getf("apps.sys"))
 delete data[x]
-await setf("apps.sys",d,JSON.stringify(data))
+await setf("apps.sys",JSON.stringify(data))
 await ref()}
 (async()=>{
+await aR;
 await ref()
 })();
 </script>
