@@ -17,7 +17,7 @@ o.push(ne)
 }return o}
 uP=async(e)=>{await aR
 if(e.key=="Tab"&&G){x.value+=G}
-if(e.ctrlKey&&e.key=="s"){e.preventDefault();await setf("home.fs",`${await getf("home.fs")||""}\neditor;${Date.now()}.txt;${Date.now()};data:text/plain;base64,${btoa(x.value)}\n`);}
+if(e.ctrlKey&&e.key=="s"){e.preventDefault();await savef(btoa(x.value),"editor","text/plain");}
 o.srcdoc=x.value
 const T=tK(x.value)
 mo=bM(x.value,8)

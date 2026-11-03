@@ -13,8 +13,10 @@ document.addEventListener("keydown",async(e)=>{
 if(e.ctrlKey&&e.key=="s"){
 e.preventDefault();
 await aR;
-data=exCSV();
-await aR;const blob=new Blob(data,{type:"text/csv;charset=utf-8;"});chunks=[];const re=new FileReader();re.readAsDataURL(blob);re.onloadend=async()=>{const dU=re.result;await setf("home.fs",`${await getf("home.fs")||""}\nsheets;${Date.now()}.csv;${Date.now()};data:${dU}\n`);};
+const blob=new Blob(exCSV(),{type:"text/csv;charset=utf-8"});
+const re=new FileReader();
+re.readAsDataURL(blob);
+re.onloadend=async()=>await savef(re.result.split(",")[1],"sheets","text/csv");
 }
 });
 init=()=>{array=document.querySelectorAll("#main td")

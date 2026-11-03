@@ -1,11 +1,12 @@
 window.aR=(async()=>{d=await(await navigator.storage.getDirectory()).getDirectoryHandle("main",{create:1});
 window.getf=async p=>{try{return await(await d.getFileHandle(p)).getFile().then(f=>f.text())}catch{return null}};
 window.setf=async(p,c)=>{let f=await d.getFileHandle(p,{create:1}),w=await f.createWritable();await w.write(c);await w.close()};
+window.savef=async(c,t,d)=>{await setf("home.fs",`${await getf("home.fs")||""}\n${t};${Date.now()}.file;${Date.now()};data:${d};base64,${c}\n`);}
 let W=JSON.parse(await getf("wins.sys")||"[]"),Z=W.reduce((a,b)=>Math.max(a,b.z||0),0);
 window.save=()=>setf("wins.sys",JSON.stringify(W));
 window.focusWin=w=>{w.style.zIndex=++Z;w.r&&(w.r.z=Z)};
 window.wev=async win=>{let bar=win.querySelector(".bar");eval(await getf("winevt.sys"))};
-window.mk=async(n,u,r)=>{r=r||{name:n,url:u};let w=document.createElement("p");w.className="w";w.r=r;w.style.cssText=`left:${r.x||120}px;top:${r.y||80}px;width:${r.w||300}px;height:${r.h||200}px`;w.innerHTML=`<p class=bar><span>${n}</span>${await getf("title.sys")}</p><iframe allow="${await getf("perms.sys")}"src=${u}></iframe>`;w.onmousedown=()=>focusWin(w);document.body.append(w);focusWin(w);w.querySelector("button").onclick=()=>{w.remove();W=W.filter(x=>x!=r);save()};wev(w);return w};
+window.mk=async(n,u,r)=>{r=r||{name:n,url:u};let w=document.createElement("p");w.className="w";w.r=r;w.style.cssText=`left:${r.x||120}px;top:${r.y||80}px;width:${r.w||500}px;height:${r.h||400}px`;w.innerHTML=`<p class=bar><span>${n}</span>${await getf("title.sys")}</p><iframe allow="${await getf("perms.sys")}"src=${u}></iframe>`;w.onmousedown=()=>focusWin(w);document.body.append(w);focusWin(w);w.querySelector("button").onclick=()=>{w.remove();W=W.filter(x=>x!=r);save()};wev(w);return w};
 window.cW=async(n,u)=>{let w=await mk(n,u);W.push(w.r);save()};
 window.iW=async()=>{W.sort((a,b)=>(a.z||0)-(b.z||0));for(let r of W)await mk(r.name,r.url,r)};
 })();
