@@ -19,7 +19,7 @@ await setf('ui.sys',`:root{color-scheme:light dark}p,a{background:#8888;margin:0
 await setf('apps.sys',JSON.stringify({sheets:"a.html",plot:"b.html",editor:"c.html",todo:"d.html",paint:"e.html",files:"f.html",camera:"h.html",browser:"j.html",nodes:"k.html",terminal:"l.html",settings:"n.html",games:"s.html",info:"i.html"}))
 await setf('perms.sys',"accelerometer;gyroscope;camera;")
 await setf('title.sys',"<button style=float:right>X</button>")
-await setf('winevt.sys',"bar.onpointermove=e=>e.buttons&&(win.style.left=win.offsetLeft+e.movementX+'px',win.style.top=win.offsetTop+e.movementY+'px')")
+await setf('winevt.sys',"bar.onpointerdown=e=>bar.setPointerCapture(e.pointerId);bar.onpointermove=e=>e.buttons&&(win.style.left=win.offsetLeft+e.movementX+'px',win.style.top=win.offsetTop+e.movementY+'px');bar.onpointerup=()=>{win.r.x=win.offsetLeft;win.r.y=win.offsetTop;win.r.z=+win.style.zIndex;save()}")
 await setf('boot',1)
 await setf('applets.sys','{"time":{"icon":"⌚","onclick":"alert(new Date)"},"reboot":{"icon":"🔌","onclick":"location.reload()"}}')
 }location.href="g.html"})();

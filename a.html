@@ -1,5 +1,5 @@
 <style>html,body{display:flex;align-items:center;justify-content:center;margin:0;padding:0;height:100vh;}*{text-align:center;}:root{color-scheme:light dark;}</style>
-<table id=nav><tr><td onclick=del(0)>-</td><td onclick=del(1)>-</td><td></td></tr><tr><td onclick=del(-1)>-</td><td><table id=main border=1><tr><td>•</td><td>•</td></tr><tr><td>•</td><td>•</td></tr></table></td><td onclick=add(-1)>+</td></tr><tr><td></td><td onclick=add(1)>+</td><td onclick=add(0)>+</td></tr></table>
+<table id=nav><tr><td onclick=del(0)>-</td><td onclick=del(1)>-</td><td></td></tr><tr><td onclick=del(-1)>-</td><td><table id=main border=1><tr><td>•</td><td>•</td></tr><tr><td>•</td><td>•</td></tr></table></td><td onclick=add(-1)>+</td></tr><tr><td></td><td onclick=add(1)>+</td><td onclick=add(0)>+</td></tr></table><script src=api.js></script>
 <script>
 del=(x)=>{switch(x){case 0:delCol();delRow();break;case 1:delRow();break;case -1:delCol();break;};init();}
 add=(y)=>{switch(y){case 0:addCol();addRow();break;case 1:addRow();break;case -1:addCol();break;};init();}
@@ -8,6 +8,15 @@ delRow=()=>main.rows.length&&main.deleteRow(-1)
 addCol=()=>{for(let r of main.rows)r.insertCell(-1).innerHTML="•"}
 addRow=()=>{let l=main.rows[0]?.cells.length||0,r=main.insertRow(-1)
 for(let i=0;i<l;i++)r.insertCell(i).innerHTML="•"}
+exCSV=()=>{return ["\uFEFF"+[...document.querySelectorAll("#main tr")].map(tr=>[...tr.cells].map(td=>{const v=td.innerText.replace(/\r\n?/g,"\n");return '"'+v.replace(/"/g,'""')+'"';}).join(",")).join("\r\n")];}
+document.addEventListener("keydown",async(e)=>{
+if(e.ctrlKey&&e.key=="s"){
+e.preventDefault();
+await aR;
+data=exCSV();
+await aR;const blob=new Blob(data,{type:"text/csv;charset=utf-8;"});chunks=[];const re=new FileReader();re.readAsDataURL(blob);re.onloadend=async()=>{const dU=re.result;await setf("home.fs",`${await getf("home.fs")||""}\nsheets;${Date.now()}.csv;${Date.now()};data:${dU}\n`);};
+}
+});
 init=()=>{array=document.querySelectorAll("#main td")
 array.forEach((element,index)=>{element.setAttribute("contenteditable",true);});}
 init()

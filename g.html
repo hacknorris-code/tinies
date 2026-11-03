@@ -8,16 +8,11 @@ c=JSON.parse(await getf('apps.sys'))
 n.innerHTML=Object.entries(c).map(([k,v])=>`<a href=${v} onclick="cW('${k}','${v}');return false">${k}</a>`).join(" ")
 window.addEventListener("message",async e=>{
 if(e.origin==location.origin&&e.data?.token==token){
-if(e.data.cmd==="open") {
-await cW(e.data.title,e.data.url);
-}else if(e.data.cmd==="f5"){
-location.reload()
-}else if(e.data.cmd==="getf"){
-console.log(e.source.postMessage({id:e.data.id,r:await getf(e.data.name)}))
-}else if(e.data.cmd==="setf"){
-await setf(e.data.name,e.data.cont)
-e.source.postMessage({id:e.data.id,r:"ok"})
-}}
+if(e.data.cmd==="open")await cW(e.data.title,e.data.url);
+if(e.data.cmd==="f5")location.reload();
+if(e.data.cmd==="getf")e.source.postMessage({id:e.data.id,r:await getf(e.data.name)});
+if(e.data.cmd==="setf")await setf(e.data.name,e.data.cont)
+}
 });
 applets=await getf("applets.sys")
 m.innerHTML=Object.entries(JSON.parse(applets)).map(([k,v])=>`<button title="${k}" onclick="${v.onclick}">${v.icon}</button>`).join(" ")

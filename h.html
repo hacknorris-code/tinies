@@ -12,21 +12,20 @@ height: 100vh;
 :root { color-scheme: light dark; }
 </style>
 <video id="prv" style="flex-grow:1;width:100%"></video><br>
-<button id="cont" style="width:50px;height:50px;border-radius:25px;user-select:none"></button><br>
+<button id="cont" style="position:fixed;width:50px;height:50px;border-radius:25px;user-select:none;bottom:0;left:50%;transform:translateX(-50%);"></button><br>
+<script src=api.js></script>
 <script>
-let stream;
-let rec;
-let chunks=[];
-let initialized=false;
+let stream,rec,chunks=[],mode="environment",initialized=false;
 async function init(){if(initialized)return;
-stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment",frameRate:{ideal:120}}});
+stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:mode,frameRate:{ideal:120}}});
 prv.srcObject = stream;
 await prv.play();
+stp=async()=>{await aR;const blob=new Blob(chunks,{type:"video/webm"});chunks=[];const re=new FileReader();re.readAsDataURL(blob);re.onloadend=async()=>{const dU=re.result;await setf("home.fs",`${await getf("home.fs")||""}\nphotos;${Date.now()}.webm;${Date.now()};${dU}\n`);};};
 rec=new MediaRecorder(stream);
 rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
-rec.onstop=()=>{const blob=new Blob(chunks,{type:"video/webm"});
-chunks=[];const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="recording.webm";a.click();URL.revokeObjectURL(url);};
+rec.onstop=stp;
 initialized = true;}
 cont.onpointerdown=async()=>{await init();if(rec.state==="inactive"){chunks=[];rec.start();}};
 cont.onpointerup=()=>{if(rec&&rec.state==="recording"){rec.stop();}};
+prv.oncontextmenu=async()=>{mode=mode==='environment'?'user':'environment';if(stream){stream.getTracks().forEach(track =>track.stop());}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:mode},frameRate:{ideal:120}}});prv.srcObject=stream;await prv.play();rec=new MediaRecorder(stream);rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};rec.onstop=stp;}
 </script>
